@@ -1,5 +1,5 @@
 import homepageData from '../test-data/homepage-data.json';
 
 export const TEST_DATA = {
-  homepage: homepageData,
+    homepage: homepageData,
 } as const;

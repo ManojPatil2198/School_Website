@@ -1,21 +1,35 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@pages/*": ["pages/*"],
-      "@tests/*": ["tests/*"]
-    }
-  },
-  "include": [
-    "playwright.config.ts",
-    "pages/**/*.ts",
-    "tests/**/*.ts"
-  ]
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "useUnknownInCatchVariables": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "paths": {
+            "@pages/*": ["pages/*"],
+            "@tests/*": ["tests/*"]
+        }
+    },
+    "include": [
+        "playwright.config.ts",
+        "eslint.config.ts",
+        "fixtures/**/*.ts",
+        "pages/**/*.ts",
+        "tests/**/*.ts",
+        "utils/**/*.ts",
+        "scratch_inspect.spec.ts"
+    ]
 }

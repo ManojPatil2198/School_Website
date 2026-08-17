@@ -1,8 +1,9 @@
-import { test, expect } from '@playwright/test';
-import { URLS } from '../../utils/urls';
+import { test, expect } from '../../fixtures/test-fixtures';
 
-test('TC_HOME_002 - Verify correct Home page URL is displayed', async ({ page }) => {
-    await page.goto(URLS.HOMEPAGE);
+test.describe('Home Page', () => {
+    test('TC_HOME_002 - Verify Home page loads successfully', async ({ homePage }) => {
+        await homePage.navigate();
 
-    await expect(page).toHaveURL(URLS.HOMEPAGE);
+        await expect(homePage.header.logoLink).toBeVisible();
+    });
 });

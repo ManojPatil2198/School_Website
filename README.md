@@ -27,7 +27,6 @@ school_webtesting/
 │
 ├── utils/
 │   ├── constants.ts
-│   ├── urls.ts
 │   ├── test-data.ts
 │   └── helpers.ts
 │
@@ -55,21 +54,25 @@ Utilities & Fixtures
 ## 🚀 Execution Commands
 
 Run all tests headlessly:
+
 ```bash
 npx playwright test
 ```
 
 Run tests in headed mode:
+
 ```bash
 npx playwright test --headed
 ```
 
 Run tests on a specific project (Chromium):
+
 ```bash
 npx playwright test --project=chromium
 ```
 
 View HTML Test Report:
+
 ```bash
 npx playwright show-report
 ```

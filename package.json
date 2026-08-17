@@ -1,18 +1,43 @@
 {
-  "name": "school_webtesting",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "devDependencies": {
-    "@playwright/test": "^1.62.1",
-    "@types/node": "^26.2.0",
-    "typescript": "^7.0.2"
-  }
+    "name": "school_webtesting",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
+        "format": "prettier . --write",
+        "format:check": "prettier . --check",
+        "typecheck": "tsc --noEmit",
+        "quality": "npm run lint && npm run format:check && npm run typecheck",
+        "test": "playwright test",
+        "prepare": "husky"
+    },
+    "lint-staged": {
+        "*.{ts,tsx}": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "*.{js,jsx,json,md,yml,yaml}": [
+            "prettier --write"
+        ]
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "@playwright/test": "^1.62.1",
+        "@types/node": "^26.2.0",
+        "eslint": "^10.8.1",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-playwright": "^2.11.0",
+        "husky": "^9.1.7",
+        "jiti": "^2.7.0",
+        "lint-staged": "^17.3.0",
+        "prettier": "^3.9.6",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.67.0"
+    }
 }
