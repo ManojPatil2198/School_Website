@@ -62,7 +62,7 @@ export class NavigationMenu {
 
         // Trigger hover on menu item
         await menuItem.hover();
-        await menuToggle.hover({ force: true });
+        await menuToggle.hover();
 
         try {
             await expect(dropWrapper).toHaveAttribute('data-dropdown-shown', 'true', {
@@ -71,7 +71,7 @@ export class NavigationMenu {
         } catch {
             // Retry hover after hydration completes
             await menuItem.hover();
-            await menuToggle.hover({ force: true });
+            await menuToggle.hover();
             await expect(dropWrapper).toHaveAttribute('data-dropdown-shown', 'true', {
                 timeout: 5000,
             });
@@ -98,6 +98,11 @@ export class NavigationMenu {
 
         await expect(menuItem).toBeVisible();
 
-        await menuItem.click();
+        const link = menuItem.locator('a, [data-testid="linkElement"]').first();
+        if (await link.isVisible()) {
+            await link.click();
+        } else {
+            await menuItem.click();
+        }
     }
 }
