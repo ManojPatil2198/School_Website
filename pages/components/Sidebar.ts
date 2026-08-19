@@ -5,6 +5,7 @@ export class Sidebar {
     readonly sidebarContainer: Locator;
     readonly inquireCTA: Locator;
     readonly applyCTA: Locator;
+    readonly schoolOverviewCTA: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -23,6 +24,11 @@ export class Sidebar {
             .getByRole('link', { name: /Apply/i })
             .or(page.getByRole('button', { name: /Apply/i }))
             .or(page.getByText('Apply', { exact: true }));
+
+        this.schoolOverviewCTA = page
+            .getByRole('link', { name: /School Overview/i })
+            .or(page.getByRole('button', { name: /School Overview/i }))
+            .or(page.getByText('School Overview', { exact: true }));
     }
 
     async verifySidebarVisible(): Promise<void> {
@@ -45,5 +51,14 @@ export class Sidebar {
     async clickApplyCTA(): Promise<void> {
         await expect(this.applyCTA.first()).toBeVisible();
         await this.applyCTA.first().click();
+    }
+
+    async verifySchoolOverviewCTAVisible(): Promise<void> {
+        await expect(this.schoolOverviewCTA.first()).toBeVisible();
+    }
+
+    async clickSchoolOverviewCTA(): Promise<void> {
+        await expect(this.schoolOverviewCTA.first()).toBeVisible();
+        await this.schoolOverviewCTA.first().click();
     }
 }
