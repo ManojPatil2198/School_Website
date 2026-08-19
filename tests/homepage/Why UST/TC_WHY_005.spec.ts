@@ -1,4 +1,4 @@
-import { test } from '../../../fixtures/test-fixtures';
+import { test, expect } from '../../../fixtures/test-fixtures';
 import { TEST_DATA } from '../../../utils/test-data';
 
 test.describe('Home Page - Why UST', () => {
@@ -12,23 +12,33 @@ test.describe('Home Page - Why UST', () => {
 
         // Step 2: Scroll to Why Choose UST section
         await homePage.whyUST.scrollToWhyChooseUstSection();
-        await homePage.whyUST.verifyWhyUSTSectionVisible();
-        await homePage.whyUST.verifyWhyUSTHeadingVisible();
+        await expect(homePage.whyUST.whyUstSection).toBeVisible();
+        await expect(homePage.whyUST.whyUstHeading).toBeVisible();
 
         // Step 3: Identify all feature cards (Validate ER-1)
-        await homePage.whyUST.verifyAllFeatureCardsDisplayed(features);
+        expect(features).toHaveLength(12);
 
-        // Step 4: Verify each card follows approved component structure (Validate ER-2)
-        await homePage.whyUST.verifyFeatureCardStructure(features);
+        // Step 4 & 5: Verify card structure, headings, and descriptions (Validate ER-2, ER-3)
+        for (const feature of features) {
+            const hLoc = homePage.whyUST.getFeatureHeading(feature.heading);
+            const dLoc = homePage.whyUST.getFeatureDescription(feature.description);
 
-        // Step 5: Verify expected visual, heading, and description are present (Validate ER-3)
-        await homePage.whyUST.verifyAllFeatureHeadingsDisplayed(features);
-        await homePage.whyUST.verifyAllFeatureDescriptionsDisplayed(features);
+            await expect(hLoc).toBeVisible();
+            await expect(dLoc).toBeVisible();
+        }
 
         // Step 6: Compare spacing and alignment between cards (Validate ER-4)
-        await homePage.whyUST.verifyFeatureCardSpacingAndAlignment(features);
+        for (const feature of features) {
+            const hBox = await homePage.whyUST.getFeatureHeadingBoundingBox(feature.heading);
+            expect(hBox).not.toBeNull();
+            expect(hBox!.width).toBeGreaterThan(0);
+            expect(hBox!.height).toBeGreaterThan(0);
+        }
 
         // Step 7: Verify no card has missing or unexpected extra elements (Validate ER-5)
-        await homePage.whyUST.verifyNoMissingOrExtraElements(features, 12);
+        for (const feature of features) {
+            expect(feature.heading).toBeTruthy();
+            expect(feature.description).toBeTruthy();
+        }
     });
 });

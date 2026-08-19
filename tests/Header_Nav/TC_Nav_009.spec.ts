@@ -1,4 +1,5 @@
 import { test, expect } from '../../fixtures/test-fixtures';
+import { TEST_DATA } from '../../utils/test-data';
 
 test.describe('Home Page - Navigation Menu', () => {
     test('TC_NAV_009 - Validate Header navigation is usable in mobile view', async ({
@@ -12,11 +13,15 @@ test.describe('Home Page - Navigation Menu', () => {
         await homePage.page.reload();
 
         // Step 3: Open the mobile Header/navigation option (Validate ER-1)
-        await homePage.header.verifyHeaderVisible();
-        await homePage.navigationMenu.verifyNavigationVisible();
+        await expect(homePage.header.headerContainer).toBeVisible();
+        await expect(homePage.navigationMenu.navContainer).toBeVisible();
 
         // Step 4: Check the displayed navigation options (Validate ER-2)
         await expect(homePage.navigationMenu.navContainer).toBeVisible();
-        await homePage.navigationMenu.verifyMenuItemVisible('About UST');
+        await expect(
+            homePage.navigationMenu.getMenuItem(
+                TEST_DATA.homepage.navigationMenu.menuNames.aboutUst,
+            ),
+        ).toBeVisible();
     });
 });

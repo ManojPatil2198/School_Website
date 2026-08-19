@@ -1,20 +1,14 @@
-import { test } from '../../fixtures/test-fixtures';
+import { test, expect } from '../../fixtures/test-fixtures';
+import { TEST_DATA } from '../../utils/test-data';
 
 test.describe('Home Page - Navigation Menu', () => {
     test('TC_NAV_002 - Verify main navigation menu items are visible', async ({ homePage }) => {
         await homePage.navigate();
 
-        const mainMenuItems = [
-            'About UST',
-            'Learning',
-            'School Life',
-            'Admissions',
-            'Summer School',
-            'Employment',
-        ];
+        const mainMenuItems = Object.values(TEST_DATA.homepage.navigationMenu.menuNames);
 
         for (const item of mainMenuItems) {
-            await homePage.navigationMenu.verifyMenuItemVisible(item);
+            await expect(homePage.navigationMenu.getMenuItem(item)).toBeVisible();
         }
     });
 });

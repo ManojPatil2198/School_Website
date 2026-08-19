@@ -15,8 +15,8 @@ export class HomePage {
     readonly navigationMenu: NavigationMenu;
     readonly heroSlider: HeroSlider;
     readonly helpfulLinks: HelpfulLinks;
-    readonly socialLinks: SocialLinks;
     readonly footer: Footer;
+    readonly socialLinks: SocialLinks;
     readonly whyUST: WhyUST;
 
     constructor(page: Page) {
@@ -27,8 +27,8 @@ export class HomePage {
         this.navigationMenu = new NavigationMenu(page);
         this.heroSlider = new HeroSlider(page);
         this.helpfulLinks = new HelpfulLinks(page);
-        this.socialLinks = new SocialLinks(page);
         this.footer = new Footer(page);
+        this.socialLinks = this.footer.socialLinks;
         this.whyUST = new WhyUST(page);
     }
 

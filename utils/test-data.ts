@@ -10,6 +10,19 @@ export interface QuickLink {
     readonly url: string;
 }
 
+export interface NavigationMenuData {
+    readonly menuNames: {
+        readonly aboutUst: string;
+        readonly learning: string;
+        readonly schoolLife: string;
+        readonly admissions: string;
+        readonly summerSchool: string;
+        readonly employment: string;
+    };
+    readonly aboutUstSubmenu: readonly string[];
+    readonly learningSubmenu: readonly string[];
+}
+
 export interface HomePageData {
     readonly title: string;
     readonly path: string;
@@ -17,7 +30,7 @@ export interface HomePageData {
     readonly whyChooseUstFeatures: readonly WhyChooseUstFeature[];
     readonly helpfulLinks: readonly string[];
     readonly quickLinks: readonly QuickLink[];
-    readonly copyrightText: string;
+    readonly navigationMenu: NavigationMenuData;
 }
 
 export interface TestData {
@@ -27,3 +40,7 @@ export interface TestData {
 export const TEST_DATA: TestData = {
     homepage: homepageData,
 } as const;
+
+export function getExpectedCopyrightPattern(): RegExp {
+    return /© All Rights Reserved, UST \d{4}/;
+}

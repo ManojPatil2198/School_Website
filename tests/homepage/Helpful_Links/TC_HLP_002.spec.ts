@@ -1,4 +1,4 @@
-import { test } from '../../../fixtures/test-fixtures';
+import { test, expect } from '../../../fixtures/test-fixtures';
 import { TEST_DATA } from '../../../utils/test-data';
 
 test.describe('Home Page - Helpful Links', () => {
@@ -13,10 +13,13 @@ test.describe('Home Page - Helpful Links', () => {
 
             // Step 2: Scroll to Helpful Links section
             await homePage.helpfulLinks.scrollToHelpfulLinksSection();
-            await homePage.helpfulLinks.verifyHelpfulLinksSectionVisible();
+            await expect(homePage.helpfulLinks.helpfulLinksHeading).toBeVisible();
 
             // Step 3, 4 & 5: Click link, verify intended destination loads, return to Home page before next link
-            await homePage.helpfulLinks.verifyLinkNavigation(linkName);
+            await homePage.helpfulLinks.clickLinkCard(linkName);
+            await expect(homePage.page).not.toHaveURL(/about:blank/);
+            await expect(homePage.page).toHaveURL(/.*united-school-of-tok/i);
+            await expect(homePage.page.locator('body')).toBeVisible();
         }
     });
 });

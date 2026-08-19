@@ -1,4 +1,4 @@
-import { test } from '../../../fixtures/test-fixtures';
+import { test, expect } from '../../../fixtures/test-fixtures';
 import { TEST_DATA } from '../../../utils/test-data';
 
 test.describe('Home Page - Helpful Links', () => {
@@ -14,16 +14,23 @@ test.describe('Home Page - Helpful Links', () => {
         await homePage.helpfulLinks.scrollToHelpfulLinksSection();
 
         // Step 3: Verify the Helpful Links heading is displayed (Validate ER-1)
-        await homePage.helpfulLinks.verifyHelpfulLinksSectionVisible();
-        await homePage.helpfulLinks.verifyHelpfulLinksHeadingVisible();
+        await expect(homePage.helpfulLinks.helpfulLinksHeading).toBeVisible();
 
-        // Step 4: Verify all available link cards/options are displayed (Validate ER-2)
-        await homePage.helpfulLinks.verifyAllLinkCardsDisplayed(links);
+        // Step 4, 5 & 6: Verify link cards displayed, readable text, and valid content (Validate ER-2, ER-3, ER-4)
+        expect(links.length).toBeGreaterThan(0);
+        for (const linkName of links) {
+            const linkLoc = homePage.helpfulLinks.getLinkCard(linkName);
+            await expect(linkLoc).toBeVisible();
 
-        // Step 5: Verify each link card has readable text (Validate ER-3)
-        await homePage.helpfulLinks.verifyAllLinksReadable(links);
+            const text = await homePage.helpfulLinks.getLinkCardText(linkName);
+            expect(text.trim().length).toBeGreaterThan(0);
+            expect(text.toLowerCase()).not.toContain('undefined');
+            expect(text.toLowerCase()).not.toContain('null');
 
-        // Step 6: Verify no card appears broken or empty (Validate ER-4)
-        await homePage.helpfulLinks.verifyNoBrokenOrEmptyCards(links);
+            const box = await homePage.helpfulLinks.getLinkCardBoundingBox(linkName);
+            expect(box).not.toBeNull();
+            expect(box!.width).toBeGreaterThan(0);
+            expect(box!.height).toBeGreaterThan(0);
+        }
     });
 });

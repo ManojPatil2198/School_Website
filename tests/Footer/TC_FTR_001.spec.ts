@@ -1,4 +1,4 @@
-import { test } from '../../fixtures/test-fixtures';
+import { test, expect } from '../../fixtures/test-fixtures';
 
 test.describe('Home Page - Footer', () => {
     test('TC_FTR_001 - Validate Footer is displayed correctly', async ({ homePage }) => {
@@ -9,7 +9,12 @@ test.describe('Home Page - Footer', () => {
         await homePage.footer.scrollToFooter();
 
         // Step 3: Check the Footer section (Validate ER-1)
-        await homePage.footer.verifyFooterDisplayed();
-        await homePage.footer.verifyFooterSectionsVisible();
+        await expect(homePage.footer.footerContainer).toBeVisible();
+        const box = await homePage.footer.getFooterBoundingBox();
+        expect(box).not.toBeNull();
+        expect(box!.width).toBeGreaterThan(0);
+        expect(box!.height).toBeGreaterThan(0);
+
+        await expect(homePage.footer.copyrightText).toBeVisible();
     });
 });

@@ -1,4 +1,4 @@
-import { test } from '../../fixtures/test-fixtures';
+import { test, expect } from '../../fixtures/test-fixtures';
 
 test.describe('Home Page - Footer', () => {
     test('TC_FTR_002 - Validate ES Campus information in Footer', async ({ homePage }) => {
@@ -9,9 +9,11 @@ test.describe('Home Page - Footer', () => {
         await homePage.footer.scrollToFooter();
 
         // Step 3: Check 'ES Campus' information (Validate ER-1)
-        await homePage.footer.verifyESCampusInformationDisplayed();
+        await expect(homePage.footer.esCampusHeading).toBeVisible();
+        await expect(homePage.footer.esCampusAddressText).toBeVisible();
 
         // Step 4: Check displayed telephone number and email address (Validate ER-2)
-        await homePage.footer.verifyESCampusContactDetails();
+        await expect(homePage.footer.esCampusPhoneText).toBeVisible();
+        await expect(homePage.footer.esCampusEmailLink).toBeVisible();
     });
 });

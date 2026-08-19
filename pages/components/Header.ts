@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class Header {
     readonly page: Page;
@@ -7,16 +7,10 @@ export class Header {
 
     constructor(page: Page) {
         this.page = page;
-        this.headerContainer = page.locator('header');
-        this.logoLink = page.locator('img[alt="UST_logo_med.png"]');
-    }
-
-    async verifyHeaderVisible(): Promise<void> {
-        await expect(this.headerContainer).toBeVisible();
-    }
-
-    async verifyLogoVisible(): Promise<void> {
-        await expect(this.logoLink).toBeVisible();
+        this.headerContainer = page.getByRole('banner').or(page.locator('header'));
+        this.logoLink = this.headerContainer
+            .getByAltText('UST_logo_med.png')
+            .or(this.headerContainer.locator('img[alt="UST_logo_med.png"]'));
     }
 
     async clickLogo(): Promise<void> {

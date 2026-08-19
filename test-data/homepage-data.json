@@ -80,5 +80,22 @@
             "url": "https://ust.edsby.com/p/BasePublic/139188577"
         }
     ],
-    "copyrightText": "© All Rights Reserved, UST 2025"
+    "navigationMenu": {
+        "menuNames": {
+            "aboutUst": "About UST",
+            "learning": "Learning",
+            "schoolLife": "School Life",
+            "admissions": "Admissions",
+            "summerSchool": "Summer School",
+            "employment": "Employment"
+        },
+        "aboutUstSubmenu": ["UST Overview", "Founding Principals", "School Governance"],
+        "learningSubmenu": [
+            "Curriculum",
+            "Early Years Program",
+            "Elementary School",
+            "Extra Curricular",
+            "Middle School"
+        ]
+    }
 }

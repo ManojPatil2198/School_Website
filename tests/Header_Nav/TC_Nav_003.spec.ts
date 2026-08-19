@@ -1,15 +1,20 @@
-import { test } from '../../fixtures/test-fixtures';
+import { test, expect } from '../../fixtures/test-fixtures';
+import { TEST_DATA } from '../../utils/test-data';
 
 test.describe('Home Page - Navigation Menu', () => {
     test('TC_NAV_003 - Verify all About UST submenu items are visible', async ({ homePage }) => {
         await homePage.navigate();
 
-        await homePage.navigationMenu.openMenu('About UST');
+        await homePage.navigationMenu.openMenu(
+            TEST_DATA.homepage.navigationMenu.menuNames.aboutUst,
+        );
 
-        const submenuItems = ['UST Overview', 'Founding Principals', 'School Governance'];
+        const submenuItems = TEST_DATA.homepage.navigationMenu.aboutUstSubmenu;
 
         for (const item of submenuItems) {
-            await homePage.navigationMenu.verifySubMenuVisible(item);
+            await expect(homePage.navigationMenu.getSubMenuItem(item)).toBeVisible({
+                timeout: 10000,
+            });
         }
     });
 });
