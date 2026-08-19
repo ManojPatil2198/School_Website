@@ -2,6 +2,7 @@ import { Page } from '@playwright/test';
 import { Header } from './components/Header';
 import { NavigationMenu } from './components/NavigationMenu';
 import { HeroSlider } from './components/HeroSlider';
+import { WelcomeToUST } from './components/WelcomeToUST';
 import { HelpfulLinks } from './components/HelpfulLinks';
 import { SocialLinks } from './components/SocialLinks';
 import { Footer } from './components/Footer';
@@ -13,6 +14,7 @@ export class HomePage {
     readonly header: Header;
     readonly navigationMenu: NavigationMenu;
     readonly heroSlider: HeroSlider;
+    readonly welcomeToUST: WelcomeToUST;
     readonly helpfulLinks: HelpfulLinks;
     readonly socialLinks: SocialLinks;
     readonly footer: Footer;
@@ -24,6 +26,7 @@ export class HomePage {
         this.header = new Header(page);
         this.navigationMenu = new NavigationMenu(page);
         this.heroSlider = new HeroSlider(page);
+        this.welcomeToUST = new WelcomeToUST(page);
         this.helpfulLinks = new HelpfulLinks(page);
         this.socialLinks = new SocialLinks(page);
         this.footer = new Footer(page);
