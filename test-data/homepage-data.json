@@ -1,5 +1,101 @@
 {
-    "title": "United School of Tokyo",
+    "title": "Home | United School Of Tok",
     "path": "/united-school-of-tok/home",
-    "url": "https://united-school-tokyo.wixsite.com/united-school-of-tok/home"
+    "url": "https://united-school-tokyo.wixsite.com/united-school-of-tok/home",
+    "whyChooseUstFeatures": [
+        {
+            "heading": "A Truly International and Inclusive Community",
+            "description": "Join a vibrant student body representing over 40 nationalities. At UST, we foster an inclusive, equitable culture of belonging that honors and reflects the full diversity of our community across cultures, languages, identities, learning styles, and experiences. Diversity isn’t just celebrated — it’s embedded in the way we learn, interact, and grow together."
+        },
+        {
+            "heading": "Close-Knit, Family-Oriented Atmosphere",
+            "description": "Our strong sense of community ensures every child is known, supported, and valued. Parents, students, and teachers work together to create a welcoming and nurturing environment."
+        },
+        {
+            "heading": "Inquiry-Driven, Whole-Child Education",
+            "description": "Our holistic, inquiry-based curriculum is tailored to support students’ academic growth while nurturing creativity, curiosity, and emotional well-being. Learning at UST is student-centered, meaningful, and joyful."
+        },
+        {
+            "heading": "Hands-On, Real-World Learning",
+            "description": "From field trips and outdoor education to project-based activities and school-wide events, students engage in experiential learning that deepens understanding and builds real-life skills."
+        },
+        {
+            "heading": "Character and Values at the Core",
+            "description": "UST promotes empathy, kindness, and integrity through weekly Guidance classes, community service programs, and student-led charitable initiatives. We help students grow into thoughtful, responsible global citizens."
+        },
+        {
+            "heading": "Personalized Learning in Small Classes",
+            "description": "With small class sizes and a commitment to differentiated instruction, our teachers can meet each student where they are and help them thrive."
+        },
+        {
+            "heading": "Japanese Language for All Levels",
+            "description": "Daily Japanese instruction is ability-based, allowing both native speakers and beginners to advance confidently in a structured and supportive setting."
+        },
+        {
+            "heading": "Inclusive and Active Student Life",
+            "description": "Our robust physical education program includes weekly swimming lessons and a wide range of sports and activities that promote fitness, teamwork, and confidence."
+        },
+        {
+            "heading": "Academic Support Built Into Every Day",
+            "description": "Daily ESL, learning support, and tutoring services are integrated into the school day, ensuring all students have the tools they need to succeed."
+        },
+        {
+            "heading": "Enriching After-School Programs",
+            "description": "From arts and STEM to leadership clubs and sports, students can explore their interests through a wide variety of extracurricular activities. Daily extended care is also available for busy families."
+        },
+        {
+            "heading": "Accessible, Values-Driven Education",
+            "description": "We believe great education should be within reach. UST is committed to keeping tuition reasonable while upholding a high standard of learning. We take pride in offering a mission-aligned, values-based education that supports a wide range of families."
+        },
+        {
+            "heading": "Convenience for Families",
+            "description": "Located in central Shibuya, UST offers easy access to public transport and excellent facilities. Our school bus service and healthy organic lunch program provide added convenience for working parents."
+        }
+    ],
+    "helpfulLinks": [
+        "UST Overview",
+        "Early Years Program",
+        "Elemantary School",
+        "MIddle School",
+        "Request a Tour",
+        "Apply",
+        "Fees&Tuition",
+        "School Calendar"
+    ],
+    "quickLinks": [
+        {
+            "name": "Facebook",
+            "url": "https://www.facebook.com/profile.php?id=100057041516643"
+        },
+        {
+            "name": "Instagram",
+            "url": "https://www.instagram.com/unitedschooloftokyo/"
+        },
+        {
+            "name": "YouTube",
+            "url": "https://www.youtube.com/@ustnews5959/playlists?view=1&sort=dd&flow=grid"
+        },
+        {
+            "name": "Edsby",
+            "url": "https://ust.edsby.com/p/BasePublic/139188577"
+        }
+    ],
+    "navigationMenu": {
+        "menuNames": {
+            "aboutUst": "About UST",
+            "learning": "Learning",
+            "schoolLife": "School Life",
+            "admissions": "Admissions",
+            "summerSchool": "Summer School",
+            "employment": "Employment"
+        },
+        "aboutUstSubmenu": ["UST Overview", "Founding Principals", "School Governance"],
+        "learningSubmenu": [
+            "Curriculum",
+            "Early Years Program",
+            "Elementary School",
+            "Extra Curricular",
+            "Middle School"
+        ]
+    }
 }

@@ -11,7 +11,6 @@ export default tseslint.config(
             'test-results/**',
             'coverage/**',
             'dist/**',
-            'scratch_inspect.spec.ts',
             'scratch/**',
         ],
     },

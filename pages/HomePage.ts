@@ -7,6 +7,7 @@ import { Sidebar } from './components/Sidebar';
 import { HelpfulLinks } from './components/HelpfulLinks';
 import { SocialLinks } from './components/SocialLinks';
 import { Footer } from './components/Footer';
+import { WhyUST } from './components/WhyUST';
 
 export class HomePage {
     readonly page: Page;
@@ -18,8 +19,9 @@ export class HomePage {
     readonly welcomeToUST: WelcomeToUST;
     readonly sidebar: Sidebar;
     readonly helpfulLinks: HelpfulLinks;
-    readonly socialLinks: SocialLinks;
     readonly footer: Footer;
+    readonly socialLinks: SocialLinks;
+    readonly whyUST: WhyUST;
 
     constructor(page: Page) {
         this.page = page;
@@ -31,8 +33,9 @@ export class HomePage {
         this.welcomeToUST = new WelcomeToUST(page);
         this.sidebar = new Sidebar(page);
         this.helpfulLinks = new HelpfulLinks(page);
-        this.socialLinks = new SocialLinks(page);
         this.footer = new Footer(page);
+        this.socialLinks = this.footer.socialLinks;
+        this.whyUST = new WhyUST(page);
     }
 
     async navigate(): Promise<void> {

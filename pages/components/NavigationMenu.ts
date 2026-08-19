@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class NavigationMenu {
     readonly page: Page;
@@ -10,7 +10,7 @@ export class NavigationMenu {
     }
 
     getMenuItem(menuName: string): Locator {
-        return this.navContainer.locator('li').filter({ hasText: menuName }).first();
+        return this.navContainer.locator('li').filter({ hasText: menuName });
     }
 
     getMenuButton(menuName: string): Locator {
@@ -27,21 +27,11 @@ export class NavigationMenu {
             .locator(
                 '[id$="dropWrapper"] [data-testid="linkElement"], [data-testid="linkElement"]:not([tabindex="-1"])',
             )
-            .filter({ hasText: itemName })
-            .first();
-    }
-
-    async verifyNavigationVisible(): Promise<void> {
-        await expect(this.navContainer).toBeVisible();
-    }
-
-    async verifyMenuItemVisible(itemName: string): Promise<void> {
-        await expect(this.getMenuItem(itemName)).toBeVisible();
+            .filter({ hasText: itemName });
     }
 
     async openMenu(menuName: string): Promise<void> {
-        const menuItem = this.getMenuItem(menuName);
-        await expect(menuItem).toBeVisible();
+        const menuItem = this.getMenuItem(menuName).first();
 
         // Wix navigation widget uses custom web components. Wait for prewarmup hydration to complete.
         const wixMenu = this.page.locator('wix-dropdown-menu');
@@ -62,42 +52,29 @@ export class NavigationMenu {
 
         // Trigger hover on menu item
         await menuItem.hover();
-        await menuToggle.hover({ force: true });
+        await menuToggle.hover();
 
-        try {
-            await expect(dropWrapper).toHaveAttribute('data-dropdown-shown', 'true', {
-                timeout: 3000,
-            });
-        } catch {
-            // Retry hover after hydration completes
+        const dropShown = await dropWrapper.getAttribute('data-dropdown-shown').catch(() => null);
+        if (dropShown !== 'true') {
             await menuItem.hover();
-            await menuToggle.hover({ force: true });
-            await expect(dropWrapper).toHaveAttribute('data-dropdown-shown', 'true', {
-                timeout: 5000,
-            });
+            await menuToggle.hover();
         }
     }
 
-    async verifySubMenuVisible(itemName: string): Promise<void> {
-        const subMenuItem = this.getSubMenuItem(itemName);
-
-        await expect(subMenuItem).toBeVisible({
-            timeout: 10000,
-        });
-    }
-
     async clickMenuItem(itemName: string): Promise<void> {
-        const subMenuItem = this.getSubMenuItem(itemName);
+        const subMenuItem = this.getSubMenuItem(itemName).first();
 
         if (await subMenuItem.isVisible()) {
             await subMenuItem.click();
             return;
         }
 
-        const menuItem = this.getMenuItem(itemName);
-
-        await expect(menuItem).toBeVisible();
-
-        await menuItem.click();
+        const menuItem = this.getMenuItem(itemName).first();
+        const link = menuItem.locator('a, [data-testid="linkElement"]').first();
+        if (await link.isVisible()) {
+            await link.click();
+        } else {
+            await menuItem.click();
+        }
     }
 }

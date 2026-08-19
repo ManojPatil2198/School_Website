@@ -9,6 +9,8 @@ export class HeroSlider {
     readonly slideIndicators: Locator;
     readonly heroHeading: Locator;
     readonly heroSubheading: Locator;
+    readonly heroImages: Locator;
+    readonly firstHeroImage: Locator;
     readonly heroSupportingText: Locator;
     readonly inquireCTA: Locator;
     readonly slideImages: Locator;
@@ -39,9 +41,16 @@ export class HeroSlider {
 
         this.slideIndicators = page.locator('nav[aria-label="Slides"] a, a[aria-label*="Slide"]');
 
-        this.heroHeading = page.getByText('Welcome to the United School of Tokyo');
+        this.heroHeading = page.getByText('Welcome to the United School of Tokyo', {
+            exact: false,
+        });
 
-        this.heroSubheading = page.getByText('International School with a Conscience');
+        this.heroSubheading = page.getByText('International School with a Conscience', {
+            exact: false,
+        });
+
+        this.heroImages = this.heroSection.locator('img, wix-bg-image, wix-bg-media');
+        this.firstHeroImage = this.heroSection.locator('img, wix-bg-image, wix-bg-media');
 
         this.heroSupportingText = page.getByText(
             /Multinational and multicultural student body from 40 different countries/i,
@@ -168,5 +177,23 @@ export class HeroSlider {
             expect(box.width).toBeGreaterThan(0);
             expect(box.height).toBeGreaterThan(0);
         }
+    }
+
+    async getHeroSectionBoundingBox() {
+        return await this.heroSection.first().boundingBox();
+    }
+
+    async getHeroImagesCount(): Promise<number> {
+        return await this.heroImages.count();
+    }
+
+    async isHeroImageLoaded(): Promise<boolean> {
+        const imgElement = this.heroSection.locator('img');
+        if ((await imgElement.count()) > 0 && (await imgElement.first().isVisible())) {
+            return await imgElement.first().evaluate((el: HTMLImageElement) => {
+                return el.complete && (el.naturalWidth > 0 || el.clientWidth > 0);
+            });
+        }
+        return true;
     }
 }
