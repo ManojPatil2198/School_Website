@@ -106,20 +106,10 @@ export class HeroSlider {
             .first()
             .hover()
             .catch(() => {});
-        const count = await this.nextButton.count();
-        if (
-            count > 0 &&
-            (await this.nextButton
-                .first()
-                .isVisible()
-                .catch(() => false))
-        ) {
-            await this.nextButton
-                .first()
-                .click()
-                .catch(() => {});
-        }
-        await expect(this.heroSection.first()).toBeVisible();
+        // eslint-disable-next-line playwright/no-force-option
+        await this.nextButton.first().click({ force: true });
+        // eslint-disable-next-line playwright/no-wait-for-timeout
+        await this.page.waitForTimeout(1500);
     }
 
     async clickPreviousButton(): Promise<void> {
@@ -127,20 +117,10 @@ export class HeroSlider {
             .first()
             .hover()
             .catch(() => {});
-        const count = await this.previousButton.count();
-        if (
-            count > 0 &&
-            (await this.previousButton
-                .first()
-                .isVisible()
-                .catch(() => false))
-        ) {
-            await this.previousButton
-                .first()
-                .click()
-                .catch(() => {});
-        }
-        await expect(this.heroSection.first()).toBeVisible();
+        // eslint-disable-next-line playwright/no-force-option
+        await this.previousButton.first().click({ force: true });
+        // eslint-disable-next-line playwright/no-wait-for-timeout
+        await this.page.waitForTimeout(1500);
     }
 
     async getSlideCount(): Promise<number> {

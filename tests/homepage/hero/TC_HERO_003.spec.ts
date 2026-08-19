@@ -17,16 +17,14 @@ test.describe('Home Page - Hero Section', () => {
         // Step 3: Identify the total number of available Hero slides/images (Validate ER-2)
         const totalSlides = await homePage.heroSlider.getSlideCount();
 
-        // Step 4: Validate all Hero slides 1 to N using slide selection and Next button (Validate ER-3 & ER-4)
-        for (let i = 0; i < totalSlides; i++) {
-            await homePage.heroSlider.selectSlide(i);
+        // Step 4 & Step 5: Click Next (>) arrow to transition forward through every available slide (Validate ER-3, ER-4 & ER-7)
+        for (let i = 1; i < totalSlides; i++) {
             await homePage.heroSlider.clickNextButton();
             await homePage.heroSlider.verifySlideImageLoaded(i);
         }
 
-        // Step 5, 6 & 7: Validate all Hero slides in reverse order using Previous button (Validate ER-5, ER-6 & ER-7)
-        for (let i = totalSlides - 1; i >= 0; i--) {
-            await homePage.heroSlider.selectSlide(i);
+        // Step 6 & Step 7: Click Previous (<) arrow from the last slide back to the first slide (Validate ER-5, ER-6 & ER-7)
+        for (let i = totalSlides - 2; i >= 0; i--) {
             await homePage.heroSlider.clickPreviousButton();
             await homePage.heroSlider.verifySlideImageLoaded(i);
         }
