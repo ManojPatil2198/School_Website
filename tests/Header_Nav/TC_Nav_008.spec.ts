@@ -1,4 +1,4 @@
-import { test, expect } from '../../../fixtures/test-fixtures';
+import { test, expect } from '../../fixtures/test-fixtures';
 
 test.describe('Home Page - Navigation Menu', () => {
     test("TC_NAV_008 - Validate navigating to 'Employment' page from Header", async ({

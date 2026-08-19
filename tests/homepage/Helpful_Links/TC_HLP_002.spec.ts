@@ -1,0 +1,22 @@
+import { test } from '../../../fixtures/test-fixtures';
+import { TEST_DATA } from '../../../utils/test-data';
+
+test.describe('Home Page - Helpful Links', () => {
+    test('TC_HLP_002 - Validate all Helpful Links navigate to their intended destinations', async ({
+        homePage,
+    }) => {
+        const links = TEST_DATA.homepage.helpfulLinks;
+
+        for (const linkName of links) {
+            // Step 1: Open the Application URL & Navigate to Home page
+            await homePage.navigate();
+
+            // Step 2: Scroll to Helpful Links section
+            await homePage.helpfulLinks.scrollToHelpfulLinksSection();
+            await homePage.helpfulLinks.verifyHelpfulLinksSectionVisible();
+
+            // Step 3, 4 & 5: Click link, verify intended destination loads, return to Home page before next link
+            await homePage.helpfulLinks.verifyLinkNavigation(linkName);
+        }
+    });
+});

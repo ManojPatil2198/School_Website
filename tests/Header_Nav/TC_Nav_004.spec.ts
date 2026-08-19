@@ -1,4 +1,4 @@
-import { test } from '../../../fixtures/test-fixtures';
+import { test } from '../../fixtures/test-fixtures';
 
 test.describe('Home Page - Navigation Menu', () => {
     test('TC_NAV_004 - Verify all Learning submenu items are visible', async ({ homePage }) => {

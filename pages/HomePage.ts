@@ -5,6 +5,7 @@ import { HeroSlider } from './components/HeroSlider';
 import { HelpfulLinks } from './components/HelpfulLinks';
 import { SocialLinks } from './components/SocialLinks';
 import { Footer } from './components/Footer';
+import { WhyUST } from './components/WhyUST';
 
 export class HomePage {
     readonly page: Page;
@@ -16,6 +17,7 @@ export class HomePage {
     readonly helpfulLinks: HelpfulLinks;
     readonly socialLinks: SocialLinks;
     readonly footer: Footer;
+    readonly whyUST: WhyUST;
 
     constructor(page: Page) {
         this.page = page;
@@ -27,6 +29,7 @@ export class HomePage {
         this.helpfulLinks = new HelpfulLinks(page);
         this.socialLinks = new SocialLinks(page);
         this.footer = new Footer(page);
+        this.whyUST = new WhyUST(page);
     }
 
     async navigate(): Promise<void> {
