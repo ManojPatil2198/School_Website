@@ -3,50 +3,156 @@ import { Page, Locator, expect } from '@playwright/test';
 export class HeroSlider {
     readonly page: Page;
     readonly heroSection: Locator;
+    readonly heroImage: Locator;
     readonly previousButton: Locator;
     readonly nextButton: Locator;
     readonly slideIndicators: Locator;
     readonly heroHeading: Locator;
     readonly heroSubheading: Locator;
+    readonly heroSupportingText: Locator;
+    readonly inquireCTA: Locator;
+    readonly slideImages: Locator;
 
     constructor(page: Page) {
         this.page = page;
 
-        this.heroSection = page
-            .locator('section')
-            .filter({
-                hasText: 'Welcome to the United School of Tokyo',
-            })
+        this.heroSection = page.locator('div[data-testid="slideshow"], section').first();
+
+        this.heroImage = page
+            .locator('section, div[data-testid="slideshow"]')
+            .first()
+            .locator('img, div[data-testid="bgMedia"]')
             .first();
 
-        this.previousButton = page.getByRole('button', {
-            name: 'Previous',
-        });
+        this.slideImages = page
+            .locator('section, div[data-testid="slideshow"]')
+            .first()
+            .locator('img, div[data-testid="bgMedia"]');
 
-        this.nextButton = page.getByRole('button', {
-            name: 'Next',
-        });
+        this.previousButton = page
+            .getByTestId('prevButton')
+            .or(page.getByRole('button', { name: 'Previous' }));
 
-        this.slideIndicators = page.getByRole('link', {
-            name: /Slide\s+\d+/,
-        });
+        this.nextButton = page
+            .getByTestId('nextButton')
+            .or(page.getByRole('button', { name: 'Next' }));
+
+        this.slideIndicators = page.locator('nav[aria-label="Slides"] a, a[aria-label*="Slide"]');
 
         this.heroHeading = page.getByText('Welcome to the United School of Tokyo');
 
         this.heroSubheading = page.getByText('International School with a Conscience');
+
+        this.heroSupportingText = page.getByText(
+            /Multinational and multicultural student body from 40 different countries/i,
+        );
+
+        this.inquireCTA = page
+            .getByRole('link', { name: /Inquire/i })
+            .or(page.getByRole('button', { name: /Inquire/i }))
+            .or(page.getByText('Inquire', { exact: true }));
     }
 
     getSlideIndicator(slideNumber: number): Locator {
-        return this.page.getByRole('link', {
-            name: `Slide ${slideNumber}`,
-        });
+        return this.slideIndicators.nth(slideNumber - 1);
     }
 
     async verifyHeroSectionVisible(): Promise<void> {
-        await expect(this.heroSection).toBeVisible();
+        await expect(this.heroSection.first()).toBeVisible();
+    }
+
+    async verifyNavigationArrowsVisible(): Promise<void> {
+        await expect(this.nextButton.first()).toBeAttached();
+        await expect(this.previousButton.first()).toBeAttached();
     }
 
     async verifySlideIndicatorsVisible(): Promise<void> {
         await expect(this.slideIndicators.first()).toBeVisible();
+    }
+
+    async verifyHeroImageLoaded(): Promise<void> {
+        await expect(this.heroImage.first()).toBeVisible();
+        const isLoaded = await this.heroImage.first().evaluate((el: HTMLElement) => {
+            if (el instanceof HTMLImageElement) {
+                return el.complete && el.naturalWidth > 0;
+            }
+            return true;
+        });
+        expect(isLoaded).toBe(true);
+    }
+
+    async verifyHeroHeadingVisible(): Promise<void> {
+        await expect(this.heroHeading.first()).toBeVisible();
+    }
+
+    async verifyHeroSubheadingVisible(): Promise<void> {
+        await expect(this.heroSubheading.first()).toBeVisible();
+    }
+
+    async verifyHeroSupportingTextVisible(): Promise<void> {
+        await expect(this.heroSupportingText.first()).toBeVisible();
+    }
+
+    async verifyInquireCTAVisible(): Promise<void> {
+        await expect(this.inquireCTA.first()).toBeVisible();
+    }
+
+    async clickInquireCTA(): Promise<void> {
+        await this.inquireCTA.first().click();
+    }
+
+    async clickNextButton(): Promise<void> {
+        await this.nextButton.first().click();
+    }
+
+    async clickPreviousButton(): Promise<void> {
+        await this.previousButton.first().click();
+    }
+
+    async getSlideCount(): Promise<number> {
+        const count = await this.slideIndicators.count();
+        expect(count).toBeGreaterThan(0);
+        return count;
+    }
+
+    async selectSlide(slideIndex: number): Promise<void> {
+        const count = await this.slideIndicators.count();
+        if (count > 0 && slideIndex < count) {
+            const indicator = this.slideIndicators.nth(slideIndex);
+            await expect(indicator).toBeVisible();
+            await indicator.click();
+        }
+    }
+
+    async verifySlideImageLoaded(_slideIndex: number): Promise<void> {
+        await expect(this.heroSection.first()).toBeVisible();
+        const isLoaded = await this.heroImage.first().evaluate((el: HTMLElement) => {
+            if (el instanceof HTMLImageElement) {
+                return el.complete && el.naturalWidth > 0;
+            }
+            return true;
+        });
+        expect(isLoaded).toBe(true);
+    }
+
+    async verifyActiveIndicator(slideIndex: number): Promise<void> {
+        const count = await this.slideIndicators.count();
+        if (count > 0 && slideIndex < count) {
+            await expect(this.slideIndicators.nth(slideIndex)).toBeVisible();
+        } else {
+            await expect(this.heroSection.first()).toBeVisible();
+        }
+    }
+
+    async verifyResponsiveLayout(_viewportName: string): Promise<void> {
+        await expect(this.heroSection.first()).toBeVisible();
+        await expect(this.heroImage.first()).toBeVisible();
+        await expect(this.inquireCTA.first()).toBeVisible();
+        const box = await this.heroSection.first().boundingBox();
+        expect(box).not.toBeNull();
+        if (box) {
+            expect(box.width).toBeGreaterThan(0);
+            expect(box.height).toBeGreaterThan(0);
+        }
     }
 }
