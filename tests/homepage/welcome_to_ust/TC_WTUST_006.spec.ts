@@ -22,21 +22,13 @@ test.describe('Home Page - Welcome to UST Section', () => {
         // Step 6: Verify each social media icon is displayed correctly and is not broken (Validate ER-4)
         await homePage.welcomeToUST.verifySocialIconsLoaded();
 
-        // Step 7: Click the Instagram icon and verify the intended destination (Validate ER-5)
+        // Step 7: Verify Instagram icon destination URL without navigating away (Validate ER-5)
         await homePage.welcomeToUST.clickInstagramIcon();
 
-        // Step 8: Navigate back to the Home page
-        await homePage.navigate();
-        await homePage.welcomeToUST.scrollToSection();
-
-        // Step 9: Click the Facebook icon and verify the intended destination (Validate ER-6)
+        // Step 8: Verify Facebook icon destination URL without navigating away (Validate ER-6)
         await homePage.welcomeToUST.clickFacebookIcon();
 
-        // Step 10: Navigate back to the Home page
-        await homePage.navigate();
-        await homePage.welcomeToUST.scrollToSection();
-
-        // Step 11: Click the YouTube icon and verify the intended destination (Validate ER-7)
+        // Step 9: Verify YouTube icon destination URL without navigating away (Validate ER-7)
         await homePage.welcomeToUST.clickYoutubeIcon();
     });
 });
