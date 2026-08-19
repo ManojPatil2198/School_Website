@@ -102,11 +102,29 @@ export class HeroSlider {
     }
 
     async clickNextButton(): Promise<void> {
+        await expect(this.nextButton.first()).toBeVisible();
         await this.nextButton.first().click();
+        await expect
+            .poll(
+                async () => {
+                    return this.heroImage.first().isVisible();
+                },
+                { timeout: 5000 },
+            )
+            .toBe(true);
     }
 
     async clickPreviousButton(): Promise<void> {
+        await expect(this.previousButton.first()).toBeVisible();
         await this.previousButton.first().click();
+        await expect
+            .poll(
+                async () => {
+                    return this.heroImage.first().isVisible();
+                },
+                { timeout: 5000 },
+            )
+            .toBe(true);
     }
 
     async getSlideCount(): Promise<number> {
