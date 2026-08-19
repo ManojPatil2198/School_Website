@@ -1,20 +1,31 @@
-import { test, expect } from '../../../fixtures/test-fixtures';
+import { test } from '../../../fixtures/test-fixtures';
 
 test.describe('Home Page - Sidebar', () => {
-    test('TC_SB_004 - Validate Apply CTA in Sidebar', async ({ homePage }) => {
+    test('TC_SB_004 - Validate Social Media icons are displayed correctly in Sidebar', async ({
+        homePage,
+    }) => {
         // Step 1: Open the Application URL
         await homePage.navigate();
 
         // Step 2: Locate the Sidebar on the Home page
         await homePage.sidebar.verifySidebarVisible();
 
-        // Step 3: Verify the 'Apply' CTA is displayed
-        await homePage.sidebar.verifyApplyCTAVisible();
+        // Step 3: Verify the Instagram icon is displayed (Validate ER-1)
+        await homePage.sidebar.verifyInstagramIconVisible();
 
-        // Step 4: Click on 'Apply' CTA in the Sidebar (Validate ER-1)
-        await homePage.sidebar.clickApplyCTA();
+        // Step 4: Verify the Facebook icon is displayed (Validate ER-2)
+        await homePage.sidebar.verifyFacebookIconVisible();
 
-        // Step 5: Verify the destination page/functionality (Validate ER-2)
-        await expect(homePage.page).not.toHaveTitle(/404|Error/i);
+        // Step 5: Verify the YouTube icon is displayed (Validate ER-3)
+        await homePage.sidebar.verifyYoutubeIconVisible();
+
+        // Step 6: Verify each social media icon is rendered correctly and is not broken (Validate ER-4)
+        await homePage.sidebar.verifySocialIconsLoaded();
+
+        // Step 7: Verify the icons are properly aligned and positioned within the Sidebar (Validate ER-5)
+        await homePage.sidebar.verifySocialIconsAlignment();
+
+        // Step 8: Verify the icons do not overlap, clip, or display unexpected visual issues (Validate ER-6)
+        await homePage.sidebar.verifySocialIconsLayout();
     });
 });
