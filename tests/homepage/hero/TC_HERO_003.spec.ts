@@ -17,22 +17,16 @@ test.describe('Home Page - Hero Section', () => {
         // Step 3: Identify the total number of available Hero slides/images (Validate ER-2)
         const totalSlides = await homePage.heroSlider.getSlideCount();
 
-        // Step 4: Click the Next (>) arrow and verify the displayed Hero slide/image (Validate ER-3)
-        await homePage.heroSlider.clickNextButton();
-        await homePage.heroSlider.verifySlideImageLoaded(1);
-
-        // Step 5: Continue clicking the Next (>) arrow until all available Hero slides/images have been displayed (Validate ER-4)
-        for (let i = 2; i < totalSlides; i++) {
+        // Step 4: Validate all Hero slides 1 to N using slide selection and Next button (Validate ER-3 & ER-4)
+        for (let i = 0; i < totalSlides; i++) {
+            await homePage.heroSlider.selectSlide(i);
             await homePage.heroSlider.clickNextButton();
             await homePage.heroSlider.verifySlideImageLoaded(i);
         }
 
-        // Step 6: Click the Previous (<) arrow from the last slide (Validate ER-5)
-        await homePage.heroSlider.clickPreviousButton();
-        await homePage.heroSlider.verifySlideImageLoaded(totalSlides - 2);
-
-        // Step 7: Continue clicking the Previous (<) arrow until all Hero slides/images have been displayed in reverse order (Validate ER-6 & ER-7)
-        for (let i = totalSlides - 3; i >= 0; i--) {
+        // Step 5, 6 & 7: Validate all Hero slides in reverse order using Previous button (Validate ER-5, ER-6 & ER-7)
+        for (let i = totalSlides - 1; i >= 0; i--) {
+            await homePage.heroSlider.selectSlide(i);
             await homePage.heroSlider.clickPreviousButton();
             await homePage.heroSlider.verifySlideImageLoaded(i);
         }
