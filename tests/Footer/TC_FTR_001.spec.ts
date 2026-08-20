@@ -1,6 +1,6 @@
 import { test, expect } from '../../fixtures/test-fixtures';
 
-test.describe('Home Page - Footer', () => {
+test.describe('Home Page - Footer', { tag: ['@smoke', '@regression'] }, () => {
     test('TC_FTR_001 - Validate Footer is displayed correctly', async ({ homePage }) => {
         // Step 1: Open the Application URL & Navigate to Home page
         await homePage.navigate();

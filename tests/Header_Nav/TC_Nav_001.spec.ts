@@ -1,6 +1,6 @@
 import { test, expect } from '../../fixtures/test-fixtures';
 
-test.describe('Home Page - Navigation Menu', () => {
+test.describe('Home Page - Navigation Menu', { tag: ['@smoke', '@regression'] }, () => {
     test('TC_NAV_001 - Verify Navigation Menu is visible', async ({ homePage }) => {
         // Step 1: Navigate to Home page
         await homePage.navigate();

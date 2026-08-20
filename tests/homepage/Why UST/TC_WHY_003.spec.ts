@@ -1,7 +1,7 @@
 import { test, expect } from '../../../fixtures/test-fixtures';
 import { TEST_DATA } from '../../../utils/test-data';
 
-test.describe('Home Page - Why UST', () => {
+test.describe('Home Page - Why UST', { tag: ['@regression', '@visual'] }, () => {
     test('TC_WHY_003 - Validate Why Choose UST responsive layout', async ({ homePage }) => {
         const features = TEST_DATA.homepage.whyChooseUstFeatures;
 

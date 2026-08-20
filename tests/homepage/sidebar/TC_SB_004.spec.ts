@@ -1,6 +1,6 @@
 import { test } from '../../../fixtures/test-fixtures';
 
-test.describe('Home Page - Sidebar', () => {
+test.describe('Home Page - Sidebar', { tag: ['@regression', '@visual'] }, () => {
     test('TC_SB_004 - Validate Social Media icons are displayed correctly in Sidebar', async ({
         homePage,
     }) => {

@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures/test-fixtures';
 import { getExpectedCopyrightPattern } from '../../utils/test-data';
 
-test.describe('Home Page - Footer', () => {
+test.describe('Home Page - Footer', { tag: ['@regression', '@visual'] }, () => {
     test('TC_FTR_006 - Validate Footer in mobile view', async ({ page, homePage }) => {
         // Step 1: Enable a mobile viewport (390x844) & Open the Application URL
         await page.setViewportSize({ width: 390, height: 844 });

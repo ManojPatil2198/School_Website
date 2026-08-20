@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures/test-fixtures';
 import { TEST_DATA } from '../../utils/test-data';
 
-test.describe('Home Page - Footer', () => {
+test.describe('Home Page - Footer', { tag: ['@regression'] }, () => {
     test('TC_FTR_004 - Validate Footer Quick Links', async ({ homePage }) => {
         // Step 1: Open the Application URL & Navigate to Home page
         await homePage.navigate();

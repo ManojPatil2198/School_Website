@@ -1,6 +1,6 @@
 import { test } from '../../../fixtures/test-fixtures';
 
-test.describe('Home Page - Hero Section', () => {
+test.describe('Home Page - Hero Section', { tag: ['@regression', '@visual'] }, () => {
     test('TC_HERO_003 - Validate all Hero carousel images/slides using Next and Previous arrows', async ({
         homePage,
     }) => {

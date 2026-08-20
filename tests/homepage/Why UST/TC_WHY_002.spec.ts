@@ -1,7 +1,7 @@
 import { test, expect } from '../../../fixtures/test-fixtures';
 import { TEST_DATA } from '../../../utils/test-data';
 
-test.describe('Home Page - Why UST', () => {
+test.describe('Home Page - Why UST', { tag: ['@regression', '@a11y'] }, () => {
     test('TC_WHY_002 - Validate all approved Why Choose UST feature headings and descriptions', async ({
         homePage,
     }) => {

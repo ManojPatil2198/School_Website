@@ -1,6 +1,6 @@
 import { test, expect } from '../../../fixtures/test-fixtures';
 
-test.describe('Home Page - Sidebar', () => {
+test.describe('Home Page - Sidebar', { tag: ['@regression'] }, () => {
     test('TC_SB_005 - Validate School Overview CTA in Sidebar', async ({ homePage }) => {
         // Step 1: Open the Application URL
         await homePage.navigate();
