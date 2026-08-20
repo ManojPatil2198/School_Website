@@ -1,7 +1,7 @@
 import { test } from '../../../fixtures/test-fixtures';
 
 test.describe('Home Page - Hero Section', () => {
-    test('TC_HERO_005 - Validate Hero responsive layout', async ({ page, homePage }) => {
+    test('TC_HERO_004 - Validate Hero responsive layout', async ({ page, homePage }) => {
         // Step 1: Open the Application URL
         await homePage.navigate();
 
