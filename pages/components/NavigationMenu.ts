@@ -3,37 +3,155 @@ import { Page, Locator } from '@playwright/test';
 export class NavigationMenu {
     readonly page: Page;
     readonly navContainer: Locator;
+    readonly hamburgerButton: Locator;
+
+    private isOpeningMenu: Promise<void> | null = null;
 
     constructor(page: Page) {
         this.page = page;
-        this.navContainer = page.getByRole('navigation', { name: 'Site' });
+
+        const desktopNav = page.locator(
+            'wix-dropdown-menu, nav[aria-label="Site"]:not(.wixui-vertical-menu)',
+        );
+
+        this.hamburgerButton = page
+            .getByRole('button', { name: /navigation menu/i })
+            .or(page.locator('#MENU_AS_CONTAINER_TOGGLE'));
+
+        this.navContainer = desktopNav
+            .or(this.hamburgerButton)
+            .or(page.locator('#MENU_AS_CONTAINER, .wixui-vertical-menu'))
+            .first();
+    }
+
+    /**
+     * Checks whether the mobile menu drawer is currently open and visible (or if desktop nav is active).
+     */
+    async isMenuDrawerOpen(): Promise<boolean> {
+        if (await this.hamburgerButton.isVisible().catch(() => false)) {
+            const drawer = this.page.locator('#MENU_AS_CONTAINER, .wixui-vertical-menu').first();
+            return await drawer.isVisible().catch(() => false);
+        }
+        return true;
+    }
+
+    /**
+     * Ensures the mobile hamburger menu drawer is opened if running in a mobile/tablet hamburger layout.
+     */
+    async ensureMenuOpen(): Promise<void> {
+        if (await this.isMenuDrawerOpen()) {
+            return;
+        }
+
+        if (this.isOpeningMenu) {
+            await this.isOpeningMenu;
+            if (await this.isMenuDrawerOpen()) {
+                return;
+            }
+        }
+
+        this.isOpeningMenu = (async () => {
+            try {
+                for (let attempt = 0; attempt < 3; attempt++) {
+                    if (await this.isMenuDrawerOpen()) {
+                        return;
+                    }
+
+                    const isHamburgerVisible = await this.hamburgerButton
+                        .first()
+                        .isVisible({ timeout: 1500 })
+                        .catch(() => false);
+
+                    if (!isHamburgerVisible) {
+                        // Desktop layout or page still navigating
+                        await this.hamburgerButton
+                            .first()
+                            .waitFor({ state: 'visible', timeout: 500 })
+                            .catch(() => {});
+                        continue;
+                    }
+
+                    // Mobile layout: open hamburger menu
+                    try {
+                        await this.hamburgerButton.first().click({ timeout: 2000 });
+                        await this.page
+                            .locator('#MENU_AS_CONTAINER, .wixui-vertical-menu')
+                            .first()
+                            .waitFor({ state: 'visible', timeout: 1000 })
+                            .catch(() => {});
+                    } catch {
+                        // Retry on hydration or transition lag
+                    }
+
+                    if (await this.isMenuDrawerOpen()) {
+                        return;
+                    }
+                }
+            } finally {
+                this.isOpeningMenu = null;
+            }
+        })();
+
+        await this.isOpeningMenu;
     }
 
     getMenuItem(menuName: string): Locator {
-        return this.navContainer.locator('li').filter({ hasText: menuName });
+        this.ensureMenuOpen().catch(() => {});
+
+        const desktopItem = this.page
+            .locator('wix-dropdown-menu li, nav[aria-label="Site"]:not(.wixui-vertical-menu) li')
+            .filter({ hasText: menuName });
+
+        const mobileItem = this.page
+            .locator(
+                '.wixui-vertical-menu [data-testid="linkElement"], #MENU_AS_CONTAINER [data-testid="linkElement"]',
+            )
+            .filter({ hasText: menuName });
+
+        return desktopItem.or(mobileItem);
     }
 
     getMenuButton(menuName: string): Locator {
-        return this.navContainer.getByRole('button', {
-            name: `More ${menuName} pages`,
-        });
+        const desktopBtn = this.page
+            .locator('wix-dropdown-menu, nav[aria-label="Site"]:not(.wixui-vertical-menu)')
+            .getByRole('button', { name: `More ${menuName} pages` });
+
+        const mobileBtn = this.page
+            .locator('.wixui-vertical-menu [data-testid="linkElement"]')
+            .filter({ hasText: menuName });
+
+        return desktopBtn.or(mobileBtn);
     }
 
     getSubMenuItem(itemName: string): Locator {
-        // Wix navigation contains hidden accessibility fallback links inside li > ul[aria-hidden="true"] with tabindex="-1".
-        // The actual visible dropdown items are rendered inside the expanded dropdown menu container ([id$="dropWrapper"]).
-        // Targeting elements inside dropWrapper or excluding tabindex="-1" ensures we select the visible link.
-        return this.navContainer
+        const desktopSub = this.page
             .locator(
-                '[id$="dropWrapper"] [data-testid="linkElement"], [data-testid="linkElement"]:not([tabindex="-1"])',
+                'wix-dropdown-menu [id$="dropWrapper"] [data-testid="linkElement"], nav[aria-label="Site"]:not(.wixui-vertical-menu) [id$="dropWrapper"] [data-testid="linkElement"]',
             )
             .filter({ hasText: itemName });
+
+        const mobileSub = this.page
+            .locator(
+                '.wixui-vertical-menu [data-testid="linkElement"], #MENU_AS_CONTAINER [data-testid="linkElement"]',
+            )
+            .filter({ hasText: itemName });
+
+        return desktopSub.or(mobileSub);
     }
 
     async openMenu(menuName: string): Promise<void> {
+        await this.ensureMenuOpen();
+
+        if (await this.hamburgerButton.isVisible().catch(() => false)) {
+            const menuItem = this.getMenuItem(menuName).first();
+            if (await menuItem.isVisible()) {
+                await menuItem.click();
+            }
+            return;
+        }
+
         const menuItem = this.getMenuItem(menuName).first();
 
-        // Wix navigation widget uses custom web components. Wait for prewarmup hydration to complete.
         const wixMenu = this.page.locator('wix-dropdown-menu');
         if ((await wixMenu.count()) > 0) {
             try {
@@ -47,32 +165,49 @@ export class NavigationMenu {
             }
         }
 
-        const dropWrapper = this.navContainer.locator('[id$="dropWrapper"]');
+        const dropWrapper = this.page
+            .getByRole('navigation', { name: 'Site' })
+            .locator('[id$="dropWrapper"]');
         const menuToggle = menuItem.locator('[data-testid="linkElement"]').first();
 
-        // Trigger hover on menu item
-        await menuItem.hover();
-        await menuToggle.hover();
+        await menuItem.hover().catch(() => {});
+        await menuToggle.hover().catch(() => {});
 
-        const dropShown = await dropWrapper.getAttribute('data-dropdown-shown').catch(() => null);
+        let dropShown = await dropWrapper.getAttribute('data-dropdown-shown').catch(() => null);
         if (dropShown !== 'true') {
-            await menuItem.hover();
-            await menuToggle.hover();
+            await menuItem.hover().catch(() => {});
+            await menuToggle.hover().catch(() => {});
+            dropShown = await dropWrapper.getAttribute('data-dropdown-shown').catch(() => null);
+            if (dropShown !== 'true') {
+                await menuItem.click().catch(() => {});
+            }
         }
     }
 
     async clickMenuItem(itemName: string): Promise<void> {
+        await this.ensureMenuOpen();
+
         const subMenuItem = this.getSubMenuItem(itemName).first();
 
-        if (await subMenuItem.isVisible()) {
-            await subMenuItem.click();
+        if (await subMenuItem.isVisible().catch(() => false)) {
+            await Promise.all([
+                this.page
+                    .waitForURL((url) => !url.href.endsWith('/home'), { timeout: 3000 })
+                    .catch(() => {}),
+                subMenuItem.click(),
+            ]);
             return;
         }
 
         const menuItem = this.getMenuItem(itemName).first();
         const link = menuItem.locator('a, [data-testid="linkElement"]').first();
-        if (await link.isVisible()) {
-            await link.click();
+        if (await link.isVisible().catch(() => false)) {
+            await Promise.all([
+                this.page
+                    .waitForURL((url) => !url.href.endsWith('/home'), { timeout: 3000 })
+                    .catch(() => {}),
+                link.click(),
+            ]);
         } else {
             await menuItem.click();
         }

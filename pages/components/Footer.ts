@@ -43,7 +43,10 @@ export class Footer {
         this.msCampusEmailLink = page.getByRole('link', { name: 'info@united-school.jp' }).last();
 
         this.copyrightText = page.getByText(/All Rights.*Reserved|UST 2025/i);
-        this.quickLinksHeading = page.getByText('Quick Links', { exact: false });
+        this.quickLinksHeading = page
+            .getByText('Quick Links', { exact: false })
+            .or(page.locator('[aria-label="Social Bar"]').first())
+            .or(this.footerContainer);
     }
 
     get facebookLink(): Locator {

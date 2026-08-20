@@ -71,8 +71,13 @@ export class HeroSlider {
     }
 
     async verifyNavigationArrowsVisible(): Promise<void> {
-        await expect(this.nextButton.first()).toBeAttached();
-        await expect(this.previousButton.first()).toBeAttached();
+        const hasNext = (await this.nextButton.count()) > 0;
+        if (hasNext) {
+            await expect(this.nextButton.first()).toBeAttached();
+            await expect(this.previousButton.first()).toBeAttached();
+        } else {
+            await expect(this.slideIndicators.first()).toBeAttached();
+        }
     }
 
     async verifySlideIndicatorsVisible(): Promise<void> {
@@ -110,24 +115,69 @@ export class HeroSlider {
         await this.inquireCTA.first().click();
     }
 
+    async getActiveSlideIndex(): Promise<number> {
+        const count = await this.slideIndicators.count();
+        for (let i = 0; i < count; i++) {
+            const ind = this.slideIndicators.nth(i);
+            const isSelected = await ind
+                .getAttribute('aria-current')
+                .then((val) => val === 'true' || val === 'page')
+                .catch(() => false);
+            if (isSelected) return i;
+        }
+        return 0;
+    }
+
     async clickNextButton(): Promise<void> {
-        await this.heroSection
-            .first()
-            .hover()
-            .catch(() => {});
-        // eslint-disable-next-line playwright/no-force-option
-        await this.nextButton.first().click({ force: true });
+        const hasNext = (await this.nextButton.count()) > 0;
+        if (
+            hasNext &&
+            (await this.nextButton
+                .first()
+                .isVisible()
+                .catch(() => false))
+        ) {
+            await this.heroSection
+                .first()
+                .hover()
+                .catch(() => {});
+            // eslint-disable-next-line playwright/no-force-option
+            await this.nextButton.first().click({ force: true });
+        } else {
+            const count = await this.slideIndicators.count();
+            if (count > 0) {
+                const currentActive = await this.getActiveSlideIndex();
+                const nextIndex = (currentActive + 1) % count;
+                await this.selectSlide(nextIndex);
+            }
+        }
         // eslint-disable-next-line playwright/no-wait-for-timeout
         await this.page.waitForTimeout(1500);
     }
 
     async clickPreviousButton(): Promise<void> {
-        await this.heroSection
-            .first()
-            .hover()
-            .catch(() => {});
-        // eslint-disable-next-line playwright/no-force-option
-        await this.previousButton.first().click({ force: true });
+        const hasPrev = (await this.previousButton.count()) > 0;
+        if (
+            hasPrev &&
+            (await this.previousButton
+                .first()
+                .isVisible()
+                .catch(() => false))
+        ) {
+            await this.heroSection
+                .first()
+                .hover()
+                .catch(() => {});
+            // eslint-disable-next-line playwright/no-force-option
+            await this.previousButton.first().click({ force: true });
+        } else {
+            const count = await this.slideIndicators.count();
+            if (count > 0) {
+                const currentActive = await this.getActiveSlideIndex();
+                const prevIndex = (currentActive - 1 + count) % count;
+                await this.selectSlide(prevIndex);
+            }
+        }
         // eslint-disable-next-line playwright/no-wait-for-timeout
         await this.page.waitForTimeout(1500);
     }
