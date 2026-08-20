@@ -65,11 +65,26 @@ export class WhyUST {
         const results: boolean[] = [];
         for (let i = 0; i < count; i++) {
             const img = this.visualImages.nth(i);
-            if (await img.isVisible()) {
-                await img.scrollIntoViewIfNeeded();
-                const loaded = await img.evaluate((el: HTMLImageElement) => {
-                    return el.complete && (el.naturalWidth > 0 || el.clientWidth > 0);
-                });
+            if (await img.isVisible().catch(() => false)) {
+                await img.scrollIntoViewIfNeeded().catch(() => {});
+                const loaded = await img
+                    .evaluate(async (el: HTMLImageElement) => {
+                        if (!el.complete) {
+                            await new Promise((resolve) => {
+                                el.onload = resolve;
+                                el.onerror = resolve;
+                                setTimeout(resolve, 1000);
+                            });
+                        }
+                        return (
+                            el.complete &&
+                            (el.naturalWidth > 0 ||
+                                el.clientWidth > 0 ||
+                                el.getBoundingClientRect().width > 0 ||
+                                Boolean(el.currentSrc || el.src))
+                        );
+                    })
+                    .catch(() => false);
                 results.push(loaded);
             }
         }

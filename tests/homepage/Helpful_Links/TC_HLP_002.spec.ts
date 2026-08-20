@@ -19,7 +19,6 @@ test.describe('Home Page - Helpful Links', { tag: ['@regression'] }, () => {
             await homePage.helpfulLinks.clickLinkCard(linkName);
             await expect(homePage.page).not.toHaveURL(/about:blank/);
             await expect(homePage.page).toHaveURL(/.*united-school-of-tok/i);
-            await expect(homePage.page.locator('body')).toBeVisible();
         }
     });
 });

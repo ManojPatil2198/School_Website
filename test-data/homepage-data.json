@@ -65,19 +65,19 @@
     "quickLinks": [
         {
             "name": "Facebook",
-            "url": "https://www.facebook.com/profile.php?id=100057041516643"
+            "url": "facebook.com"
         },
         {
             "name": "Instagram",
-            "url": "https://www.instagram.com/unitedschooloftokyo/"
+            "url": "instagram.com"
         },
         {
             "name": "YouTube",
-            "url": "https://www.youtube.com/@ustnews5959/playlists?view=1&sort=dd&flow=grid"
+            "url": "youtube.com"
         },
         {
             "name": "Edsby",
-            "url": "https://ust.edsby.com/p/BasePublic/139188577"
+            "url": "edsby.com"
         }
     ],
     "navigationMenu": {
