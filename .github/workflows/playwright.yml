@@ -4,12 +4,14 @@ on:
     push:
         branches:
             - main
-            - develop
+            - dev
+            - feature/manoj
 
     pull_request:
         branches:
             - main
-            - develop
+            - dev
+            - feature/manoj
 
     workflow_dispatch:
 
