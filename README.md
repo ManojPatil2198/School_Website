@@ -199,3 +199,11 @@ To protect critical branches (`main` and `develop`), configure the following set
 | **Missing Playwright Browsers** | Browser binaries not pre-installed in runner       | Workflow handles this with `npx playwright install --with-deps chromium`.                             |
 | **Flaky / Timed out tests**     | Slow application load or hardcoded wait issues     | Check test trace artifacts. Avoid fixed `page.waitForTimeout()`; use Playwright web-first assertions. |
 | **Base URL mismatch**           | Environment URL changed or unreachable             | Check `BASE_URL` secret value in GitHub repository settings.                                          |
+
+---
+
+## 📊 Test Coverage Tracker
+
+The test coverage tracker is available at:
+
+docs/Test_Coverage_Tracker.xlsx
