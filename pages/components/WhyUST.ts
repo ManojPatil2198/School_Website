@@ -14,13 +14,9 @@ export class WhyUST {
 
     constructor(page: Page) {
         this.page = page;
-        this.whyUstSection = page.locator('main').first();
-        this.whyUstHeading = page
-            .locator('main')
-            .getByRole('heading', { name: /Why UST|Why Choose UST|United School/i })
-            .or(page.getByText('Why choose UST', { exact: false }))
-            .first();
-        this.visualAssets = this.whyUstSection.locator('img, svg, wix-bg-image');
+        this.whyUstSection = page.locator('main');
+        this.whyUstHeading = page.getByRole('heading', { name: /Why UST|Why Choose UST/i });
+        this.visualAssets = this.whyUstSection.locator('img, svg');
         this.visualImages = this.whyUstSection.locator('img');
     }
 

@@ -18,48 +18,34 @@ export class HeroSlider {
     constructor(page: Page) {
         this.page = page;
 
-        this.heroSection = page.locator('div[data-testid="slideshow"], section').first();
+        this.heroSection = page.locator('section').first();
 
-        this.heroImage = page
-            .locator('section, div[data-testid="slideshow"]')
-            .first()
-            .locator('img, div[data-testid="bgMedia"]')
-            .first();
+        this.heroImage = this.heroSection.locator('img, div[data-testid="bgMedia"]').first();
 
-        this.slideImages = page
-            .locator('section, div[data-testid="slideshow"]')
-            .first()
-            .locator('img, div[data-testid="bgMedia"]');
+        this.slideImages = this.heroSection.locator('img, div[data-testid="bgMedia"]');
 
         this.previousButton = page
-            .getByTestId('prevButton')
-            .or(page.getByRole('button', { name: 'Previous' }));
+            .getByRole('button', { name: 'Previous' })
+            .or(page.getByTestId('prevButton'));
 
         this.nextButton = page
-            .getByTestId('nextButton')
-            .or(page.getByRole('button', { name: 'Next' }));
+            .getByRole('button', { name: 'Next' })
+            .or(page.getByTestId('nextButton'));
 
-        this.slideIndicators = page.locator('nav[aria-label="Slides"] a, a[aria-label*="Slide"]');
+        this.slideIndicators = page.locator('nav[aria-label="Slides"] a');
 
-        this.heroHeading = page.getByText('Welcome to the United School of Tokyo', {
-            exact: false,
-        });
+        this.heroHeading = page.getByText('Welcome to the United School of Tokyo');
 
-        this.heroSubheading = page.getByText('International School with a Conscience', {
-            exact: false,
-        });
+        this.heroSubheading = page.getByText('International School with a Conscience');
 
-        this.heroImages = this.heroSection.locator('img, wix-bg-image, wix-bg-media');
-        this.firstHeroImage = this.heroSection.locator('img, wix-bg-image, wix-bg-media');
+        this.heroImages = this.heroSection.locator('img');
+        this.firstHeroImage = this.heroSection.locator('img').first();
 
         this.heroSupportingText = page.getByText(
             /Multinational and multicultural student body from 40 different countries/i,
         );
 
-        this.inquireCTA = page
-            .getByRole('link', { name: /Inquire/i })
-            .or(page.getByRole('button', { name: /Inquire/i }))
-            .or(page.getByText('Inquire', { exact: true }));
+        this.inquireCTA = page.getByRole('link', { name: /Inquire/i });
     }
 
     getSlideIndicator(slideNumber: number): Locator {
@@ -217,7 +203,7 @@ export class HeroSlider {
         }
     }
 
-    async verifyResponsiveLayout(_viewportName: string): Promise<void> {
+    async verifyResponsiveLayout(_viewportName?: string): Promise<void> {
         await expect(this.heroSection.first()).toBeVisible();
         await expect(this.heroImage.first()).toBeVisible();
         await expect(this.inquireCTA.first()).toBeVisible();
