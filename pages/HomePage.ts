@@ -8,6 +8,7 @@ import { HelpfulLinks } from './components/HelpfulLinks';
 import { SocialLinks } from './components/SocialLinks';
 import { Footer } from './components/Footer';
 import { WhyUST } from './components/WhyUST';
+import { ImageSection } from './components/ImageSection';
 
 export class HomePage {
     readonly page: Page;
@@ -22,6 +23,7 @@ export class HomePage {
     readonly footer: Footer;
     readonly socialLinks: SocialLinks;
     readonly whyUST: WhyUST;
+    readonly imageSection: ImageSection;
 
     constructor(page: Page) {
         this.page = page;
@@ -36,6 +38,7 @@ export class HomePage {
         this.footer = new Footer(page);
         this.socialLinks = this.footer.socialLinks;
         this.whyUST = new WhyUST(page);
+        this.imageSection = new ImageSection(page);
     }
 
     async navigate(): Promise<void> {
