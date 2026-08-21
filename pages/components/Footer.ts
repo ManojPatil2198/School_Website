@@ -42,7 +42,7 @@ export class Footer {
         this.msCampusPhoneLink = page.locator('a[href*="tel:(+81)357388850"]');
         this.msCampusEmailLink = page.getByRole('link', { name: 'info@united-school.jp' }).last();
 
-        this.copyrightText = page.getByText(/©|All Rights.*Reserved|UST 2025/i);
+        this.copyrightText = page.getByText(/©|All Rights.*Reserved|UST 2025/i).first();
         this.quickLinksHeading = page
             .getByText('Quick Links', { exact: false })
             .or(page.locator('[aria-label="Social Bar"]'))
