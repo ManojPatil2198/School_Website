@@ -7,8 +7,8 @@ export class HelpfulLinks {
 
     constructor(page: Page) {
         this.page = page;
-        this.helpfulLinksHeading = page.getByText('Helpful Links', { exact: false });
-        this.quickLinksHeading = page.getByText('Quick Links', { exact: false });
+        this.helpfulLinksHeading = page.getByText('Helpful Links');
+        this.quickLinksHeading = page.getByText('Quick Links');
     }
 
     async scrollToHelpfulLinksSection(): Promise<void> {

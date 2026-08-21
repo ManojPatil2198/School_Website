@@ -7,10 +7,8 @@ export class Header {
 
     constructor(page: Page) {
         this.page = page;
-        this.headerContainer = page.locator('header, #SITE_HEADER').first();
-        this.logoLink = page
-            .locator('header img, #SITE_HEADER img, img[alt*="logo"], a[href*="home"] img')
-            .first();
+        this.headerContainer = page.locator('header');
+        this.logoLink = page.locator('header img').first();
     }
 
     async verifyHeaderVisible(): Promise<void> {

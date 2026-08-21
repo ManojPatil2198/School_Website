@@ -26,23 +26,23 @@ export class Footer {
     constructor(page: Page) {
         this.page = page;
         this.socialLinks = new SocialLinks(page);
-        this.footerContainer = page.locator('footer, #SITE_FOOTER').first();
+        this.footerContainer = page.locator('footer');
 
         this.esCampusHeading = page.getByText('ES Campus');
         this.esCampusAddressText = page.getByText(/Tomigaya 2 −21−10/i);
         this.esCampusAddressLink = page.locator('a[href*="maps"]').first();
-        this.esCampusPhoneText = page.getByText('(+81)3-5790-9405', { exact: false });
+        this.esCampusPhoneText = page.getByText('(+81)3-5790-9405');
         this.esCampusPhoneLink = page.locator('a[href*="tel:(+81)357909405"]');
         this.esCampusEmailLink = page.getByRole('link', { name: 'info@united-school.jp' }).first();
 
         this.msCampusHeading = page.getByText('MS Campus');
         this.msCampusAddressText = page.getByText(/Tomigaya 2 −19−10/i);
         this.msCampusAddressLink = page.locator('a[href*="maps"]').last();
-        this.msCampusPhoneText = page.getByText('(+81)3-5738-8850', { exact: false });
+        this.msCampusPhoneText = page.getByText('(+81)3-5738-8850');
         this.msCampusPhoneLink = page.locator('a[href*="tel:(+81)357388850"]');
         this.msCampusEmailLink = page.getByRole('link', { name: 'info@united-school.jp' }).last();
 
-        this.copyrightText = page.getByText(/All Rights.*Reserved|UST 2025/i);
+        this.copyrightText = page.getByText(/©|All Rights.*Reserved|UST 2025/i);
         this.quickLinksHeading = page
             .getByText('Quick Links', { exact: false })
             .or(page.locator('[aria-label="Social Bar"]'))

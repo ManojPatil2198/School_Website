@@ -10,16 +10,13 @@ export class NavigationMenu {
     constructor(page: Page) {
         this.page = page;
 
-        const desktopNav = page.locator(
-            'wix-dropdown-menu, nav[aria-label="Site"]:not(.wixui-vertical-menu)',
-        );
+        const desktopNav = page.locator('wix-dropdown-menu, nav[aria-label="Site"]');
 
         this.hamburgerButton = page
             .getByRole('button', { name: /navigation menu/i })
             .or(page.locator('#MENU_AS_CONTAINER_TOGGLE'));
 
         this.navContainer = desktopNav
-            .or(this.hamburgerButton)
             .or(page.locator('#MENU_AS_CONTAINER, .wixui-vertical-menu'))
             .first();
     }
@@ -99,12 +96,12 @@ export class NavigationMenu {
         this.ensureMenuOpen().catch(() => {});
 
         const desktopItem = this.page
-            .locator('wix-dropdown-menu li, nav[aria-label="Site"]:not(.wixui-vertical-menu) li')
+            .locator('wix-dropdown-menu li, nav[aria-label="Site"] li')
             .filter({ hasText: menuName });
 
         const mobileItem = this.page
             .locator(
-                '.wixui-vertical-menu [data-testid="linkElement"], #MENU_AS_CONTAINER [data-testid="linkElement"]',
+                '#MENU_AS_CONTAINER [data-testid="linkElement"], .wixui-vertical-menu [data-testid="linkElement"]',
             )
             .filter({ hasText: menuName });
 
@@ -113,11 +110,11 @@ export class NavigationMenu {
 
     getMenuButton(menuName: string): Locator {
         const desktopBtn = this.page
-            .locator('wix-dropdown-menu, nav[aria-label="Site"]:not(.wixui-vertical-menu)')
+            .locator('wix-dropdown-menu, nav[aria-label="Site"]')
             .getByRole('button', { name: `More ${menuName} pages` });
 
         const mobileBtn = this.page
-            .locator('.wixui-vertical-menu [data-testid="linkElement"]')
+            .locator('#MENU_AS_CONTAINER [data-testid="linkElement"]')
             .filter({ hasText: menuName });
 
         return desktopBtn.or(mobileBtn);
@@ -125,14 +122,12 @@ export class NavigationMenu {
 
     getSubMenuItem(itemName: string): Locator {
         const desktopSub = this.page
-            .locator(
-                'wix-dropdown-menu [id$="dropWrapper"] [data-testid="linkElement"], nav[aria-label="Site"]:not(.wixui-vertical-menu) [id$="dropWrapper"] [data-testid="linkElement"]',
-            )
+            .locator('wix-dropdown-menu [id$="dropWrapper"] [data-testid="linkElement"]')
             .filter({ hasText: itemName });
 
         const mobileSub = this.page
             .locator(
-                '.wixui-vertical-menu [data-testid="linkElement"], #MENU_AS_CONTAINER [data-testid="linkElement"]',
+                '#MENU_AS_CONTAINER [data-testid="linkElement"], .wixui-vertical-menu [data-testid="linkElement"]',
             )
             .filter({ hasText: itemName });
 

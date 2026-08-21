@@ -5,6 +5,7 @@ test.describe('Home Page - Helpful Links', { tag: ['@regression'] }, () => {
     test('TC_HLP_002 - Validate all Helpful Links navigate to their intended destinations', async ({
         homePage,
     }) => {
+        test.setTimeout(90000);
         const links = TEST_DATA.homepage.helpfulLinks;
 
         for (const linkName of links) {

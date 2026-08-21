@@ -14,39 +14,21 @@ export class Sidebar {
         this.page = page;
 
         this.sidebarContainer = page
-            .locator('aside, section, div[data-testid="container"]')
+            .locator('section, aside')
             .filter({ hasText: /Inquire|Apply|Overview/i })
             .first();
 
-        this.inquireCTA = page
-            .getByRole('link', { name: /Inquire/i })
-            .or(page.getByRole('button', { name: /Inquire/i }))
-            .or(page.getByText('Inquire', { exact: true }));
+        this.inquireCTA = page.getByRole('link', { name: /Inquire/i });
 
-        this.applyCTA = page
-            .getByRole('link', { name: /Apply/i })
-            .or(page.getByRole('button', { name: /Apply/i }))
-            .or(page.getByText('Apply', { exact: true }));
+        this.applyCTA = page.getByRole('link', { name: /Apply/i });
 
-        this.schoolOverviewCTA = page
-            .getByRole('link', { name: /School Overview/i })
-            .or(page.getByRole('button', { name: /School Overview/i }))
-            .or(page.getByText('School Overview', { exact: true }));
+        this.schoolOverviewCTA = page.getByRole('link', { name: /School Overview/i });
 
-        this.instagramIcon = page
-            .getByRole('link', { name: /Instagram/i })
-            .or(page.locator('a[href*="instagram.com"]'))
-            .first();
+        this.instagramIcon = page.locator('a[href*="instagram.com"]').first();
 
-        this.facebookIcon = page
-            .getByRole('link', { name: /Facebook/i })
-            .or(page.locator('a[href*="facebook.com"]'))
-            .first();
+        this.facebookIcon = page.locator('a[href*="facebook.com"]').first();
 
-        this.youtubeIcon = page
-            .getByRole('link', { name: /Youtube|YouTube/i })
-            .or(page.locator('a[href*="youtube.com"]'))
-            .first();
+        this.youtubeIcon = page.locator('a[href*="youtube.com"]').first();
     }
 
     async verifySidebarVisible(): Promise<void> {

@@ -16,7 +16,7 @@ export class WelcomeToUST {
         this.page = page;
 
         this.welcomeSection = page
-            .locator('section, div[data-testid="container"]')
+            .locator('section')
             .filter({ hasText: 'Welcome to the United School of Tokyo' })
             .first();
 
@@ -26,34 +26,15 @@ export class WelcomeToUST {
 
         this.contentArea = this.welcomeSection;
 
-        this.sectionImage = page
-            .locator('section, div[data-testid="container"]')
-            .filter({ hasText: 'Welcome to the United School of Tokyo' })
-            .locator('img')
-            .first();
+        this.sectionImage = this.welcomeSection.locator('img').first();
 
-        this.learnMoreLink = page
-            .locator('section, div[data-testid="container"]')
-            .filter({ hasText: 'Welcome to the United School of Tokyo' })
-            .getByRole('link', { name: /Learn More/i })
-            .or(page.getByRole('link', { name: /Learn More/i }))
-            .or(page.getByRole('button', { name: /Learn More/i }))
-            .or(page.getByText('Learn More', { exact: true }));
+        this.learnMoreLink = this.welcomeSection.getByRole('link', { name: /Learn More/i });
 
-        this.instagramIcon = page
-            .getByRole('link', { name: /Instagram/i })
-            .or(page.locator('a[href*="instagram.com"]'))
-            .first();
+        this.instagramIcon = page.locator('a[href*="instagram.com"]').first();
 
-        this.facebookIcon = page
-            .getByRole('link', { name: /Facebook/i })
-            .or(page.locator('a[href*="facebook.com"]'))
-            .first();
+        this.facebookIcon = page.locator('a[href*="facebook.com"]').first();
 
-        this.youtubeIcon = page
-            .getByRole('link', { name: /Youtube|YouTube/i })
-            .or(page.locator('a[href*="youtube.com"]'))
-            .first();
+        this.youtubeIcon = page.locator('a[href*="youtube.com"]').first();
     }
 
     async scrollToSection(): Promise<void> {
