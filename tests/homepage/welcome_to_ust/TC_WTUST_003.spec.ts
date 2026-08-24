@@ -1,7 +1,7 @@
 import { test } from '../../../fixtures/test-fixtures';
 
 test.describe('Home Page - Welcome to UST Section', () => {
-    test('TC_WTUST_006 - Validate Social Media icons and navigation in Welcome to UST section', async ({
+    test('TC_WTUST_003 - Validate Social Media icons and navigation in Welcome to UST section', async ({
         homePage,
     }) => {
         // Step 1: Open the Application URL

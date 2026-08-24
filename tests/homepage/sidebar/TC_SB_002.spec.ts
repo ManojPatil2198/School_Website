@@ -1,7 +1,7 @@
 import { test } from '../../../fixtures/test-fixtures';
 
 test.describe('Home Page - Sidebar', () => {
-    test('TC_SB_004 - Validate Social Media icons are displayed correctly in Sidebar', async ({
+    test('TC_SB_002 - Validate Social Media icons are displayed correctly in Sidebar', async ({
         homePage,
     }) => {
         // Step 1: Open the Application URL
