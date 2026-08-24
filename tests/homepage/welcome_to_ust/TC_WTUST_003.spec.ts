@@ -1,6 +1,6 @@
 import { test } from '../../../fixtures/test-fixtures';
 
-test.describe('Home Page - Welcome to UST Section', () => {
+test.describe('Home Page - Welcome to UST Section', { tag: ['@regression', '@visual'] }, () => {
     test('TC_WTUST_003 - Validate Social Media icons and navigation in Welcome to UST section', async ({
         homePage,
     }) => {

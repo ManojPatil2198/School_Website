@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures/test-fixtures';
 import { getExpectedCopyrightPattern } from '../../utils/test-data';
 
-test.describe('Home Page - Footer', () => {
+test.describe('Home Page - Footer', { tag: ['@regression', '@visual'] }, () => {
     test('TC_FTR_006 - Validate Footer in mobile view', async ({ page, homePage }) => {
         // Step 1: Open the Application URL
         await homePage.navigate();

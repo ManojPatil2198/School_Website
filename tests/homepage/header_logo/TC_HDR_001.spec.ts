@@ -1,6 +1,6 @@
 import { test, expect } from '../../../fixtures/test-fixtures';
 
-test.describe('Header - Logo', () => {
+test.describe('Home Page - Header', { tag: ['@smoke', '@regression', '@visual'] }, () => {
     test('TC_HDR_001 - Validate United School of Tokyo logo is displayed and clickable', async ({
         homePage,
     }) => {

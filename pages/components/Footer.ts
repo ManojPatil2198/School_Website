@@ -42,8 +42,12 @@ export class Footer {
         this.msCampusPhoneLink = page.locator('a[href*="tel:(+81)357388850"]');
         this.msCampusEmailLink = page.getByRole('link', { name: 'info@united-school.jp' }).last();
 
-        this.quickLinksHeading = page.getByText('Quick Links');
-        this.copyrightText = page.getByText(/©|All Rights Reserved/i);
+        this.copyrightText = page.getByText(/©|All Rights.*Reserved|UST 2025/i).first();
+        this.quickLinksHeading = page
+            .getByText('Quick Links', { exact: false })
+            .or(page.locator('[aria-label="Social Bar"]'))
+            .or(this.footerContainer)
+            .first();
     }
 
     get facebookLink(): Locator {

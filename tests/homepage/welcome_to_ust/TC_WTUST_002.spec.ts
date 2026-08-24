@@ -1,6 +1,6 @@
 import { test, expect } from '../../../fixtures/test-fixtures';
 
-test.describe('Home Page - Welcome to UST Section', () => {
+test.describe('Home Page - Welcome to UST Section', { tag: ['@regression'] }, () => {
     test('TC_WTUST_002 - Validate Learn More link from Welcome to UST section', async ({
         homePage,
     }) => {

@@ -1,6 +1,6 @@
 import { test } from '../../../fixtures/test-fixtures';
 
-test.describe('Home Page - Hero Section', () => {
+test.describe('Home Page - Hero Section', { tag: ['@regression'] }, () => {
     test('TC_HERO_002 - Validate Hero content is displayed correctly', async ({ homePage }) => {
         // Step 1: Open the Application URL
         await homePage.navigate();

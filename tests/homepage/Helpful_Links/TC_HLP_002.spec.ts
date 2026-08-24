@@ -1,7 +1,7 @@
 import { test, expect } from '../../../fixtures/test-fixtures';
 import { TEST_DATA } from '../../../utils/test-data';
 
-test.describe('Home Page - Helpful Links', () => {
+test.describe('Home Page - Helpful Links', { tag: ['@regression'] }, () => {
     test('TC_HLP_002 - Validate all Helpful Links navigate to their intended destinations', async ({
         homePage,
     }) => {

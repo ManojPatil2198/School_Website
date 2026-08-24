@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures/test-fixtures';
 import { TEST_DATA } from '../../utils/test-data';
 
-test.describe('Home Page - Navigation Menu', () => {
+test.describe('Home Page - Navigation Menu', { tag: ['@regression', '@visual'] }, () => {
     test('TC_NAV_009 - Validate Header navigation is usable in mobile view', async ({
         homePage,
     }) => {

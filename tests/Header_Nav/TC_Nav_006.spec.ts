@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures/test-fixtures';
 import { TEST_DATA } from '../../utils/test-data';
 
-test.describe('Home Page - Navigation Menu', () => {
+test.describe('Home Page - Navigation Menu', { tag: ['@regression'] }, () => {
     test("TC_NAV_006 - Validate navigating to 'Admissions' page/functionality from Header", async ({
         homePage,
     }) => {
