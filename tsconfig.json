@@ -29,7 +29,6 @@
         "fixtures/**/*.ts",
         "pages/**/*.ts",
         "tests/**/*.ts",
-        "utils/**/*.ts",
-        "scratch_inspect.spec.ts"
+        "utils/**/*.ts"
     ]
 }

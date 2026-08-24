@@ -1,7 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../fixtures/test-fixtures';
 
-test('TC_HOME_001 - Verify correct Home page URL is displayed', async ({ page }) => {
-    await page.goto('');
+test.describe('Home Page', { tag: ['@smoke', '@regression'] }, () => {
+    test('TC_HOME_001 - Verify correct Home page URL is displayed', async ({ homePage }) => {
+        await homePage.navigate();
 
-    await expect(page).toHaveURL(/.*united-school-of-tok\/home/);
+        await expect(homePage.page).toHaveURL(/.*united-school-of-tok\/home/);
+    });
 });
